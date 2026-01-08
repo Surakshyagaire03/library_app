@@ -1,11 +1,11 @@
-
-# Create read update delete
 class BooksController < ApplicationController
+  include BooksHelper
+
   def index
     @books = Book.all
   end
 
-  def show  #Showdetails of one book
+  def show
     @book = Book.find(params[:id])
   end
 
@@ -17,7 +17,8 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
 
     if @book.save
-      redirect_to books_path, notice: "Book created successfully"
+      flash[:notice] = "We have added a new #{formatted_author(@book)}!"
+      redirect_to books_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,20 +32,22 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
 
     if @book.update(book_params)
-      redirect_to book_path(@book), notice: "Book updated successfully"
+      flash[:notice] = "Book updated successfully"
+      redirect_to book_path(@book)
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
-  def destroy  #Deletes book from database
+  def destroy
     @book = Book.find(params[:id])
     @book.destroy
 
-    redirect_to books_path, notice: "Book deleted successfully"
+    flash[:notice] = "Book deleted successfully"
+    redirect_to books_path
   end
 
-  private   #for safe while doing big projcet
+  private
 
   def book_params
     params.require(:book).permit(:title, :author, :rating)

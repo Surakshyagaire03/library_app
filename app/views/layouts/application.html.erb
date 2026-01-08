@@ -28,7 +28,15 @@
 
     <!-- Main Page Content -->
     <div class="container">
-      <%= yield %>
+    
+    <%= yield %>
+      <% flash.each do |type, message| %>
+  <div style=" max-width: 400px; margin: 12px auto; padding: 10px 16px; background-color: #16a34a; color: white;border-radius: 6px;font-size: 14px;text-align: center;">
+    <%= message %>
+  </div>
+<% end %>
+
+
     </div>
 
     <!-- Footer -->
