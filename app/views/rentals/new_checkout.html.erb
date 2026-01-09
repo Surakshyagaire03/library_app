@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h2>Checkout Book</h2>
+
+  <%= form_with url: create_checkout_path, local: true do %>
+    <div class="mb-3">
+      <%= label_tag :book_id, "Select Book" %>
+      <%= select_tag :book_id, options_from_collection_for_select(@books, :id, :title), prompt: "Choose a book", class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag :customer_email, "Customer Email" %>
+      <%= text_field_tag :customer_email, "", class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag :rented_on, "Rented On" %>
+      <%= date_field_tag :rented_on, Date.today, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag :returned_on, "Returned On" %>
+      <%= date_field_tag :returned_on, Date.today + 7.days, class: "form-control" %>
+    </div>
+
+    <%= submit_tag "Checkout", class: "btn btn-primary" %>
+  <% end %>
+</div>
